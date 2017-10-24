@@ -1,0 +1,14 @@
+/nbproject/project.properties
+/nbproject/
+/nbproject/project.xml
+/system/nbproject/private
+/system/nbproject/private/private.xml
+/system/nbproject/project.properties
+/system/nbproject/
+/system/nbproject/project.xml
+/system/log
+/templates_c
+/admin/templates_c
+.DS_Store
+Thumbs.db
+/system/data/smarty/templates_c/

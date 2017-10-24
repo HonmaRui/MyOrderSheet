@@ -1,0 +1,715 @@
+@charset "utf-8";
+
+/****************************************************
+マスタ管理
+　・顧客管理
+　・商品管理
+　・基本設定
+　・伝票･受注管理
+****************************************************/
+
+/****************************************************/
+/* 顧客管理 */
+/****************************************************/
+  /* 顧客分類 */
+  .outbox-col2 .col2-inner-l-type {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    height: auto;
+    padding-right: 1%;
+    width: 40%;
+    *width: 49%;/* IE7 */
+  }
+
+  .outbox-col2 .col2-inner-r-type {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    height: auto;
+    width: 60%;
+    *width: 49%;/* IE7 */
+  }
+  
+  .c-type-table th {
+    width: 35%;
+  }
+  
+  .c-type-list input[type="button"] {
+    padding: 2px;
+  }
+    
+  .list-ctype {
+    overflow-y: scroll !important;
+    overflow-x: hidden !important;
+    max-height: 150px;
+  }
+    
+  .list-ctype input[type="button"]{
+    font-size: 12px;
+    font-size: 1.2rem;
+  }
+
+  /* テーブル */
+  .form-table-syouhin {
+    overflow: scroll;
+    width: 100%;
+    border-bottom: 1px solid #c6c6c6;
+    height: auto;
+  }
+  
+  .scr {
+    overflow: scroll; 
+    height: 100px;
+  }
+  
+  /*  */
+  .c-master th {
+    width: 20%;
+  }
+  
+  /* 請求先マスタ */
+  .b-master th {
+    width: 22%;
+  }
+
+/*顧客検索*/
+  .id-table {
+    border-bottom: none;
+  }
+
+/* 顧客カテゴリ */
+  .treebox {
+    list-style-type: none;
+    height: auto;
+    width: 100%;
+  }
+  
+  .treebox li {
+    padding: 3px 0;
+    text-align: left;
+  }
+  
+  .treebox li img,
+  .treebox li a {
+    display: inline;
+  }
+  
+  .treebox li .tree-home:before {
+    content:"▼";
+  }
+  /*
+  .treebox li .folder:before {
+    content:url(../img/products/folder.gif);
+  }
+  */
+  .cat-home,
+  .treebox .cat-lv1 {
+    margin: 0;
+  }
+  
+  .treebox .cat-lv2 {
+    margin-left: 20px;
+  }
+  
+  .treebox .cat-lv3 {
+    margin-left: 40px;
+  }
+  
+  .treebox .cat-lv4 {
+    margin-left: 60px;
+  }
+  
+  .treebox .cat-lv5 {
+    margin-left: 80px;
+  }
+  
+  .c-btnbox {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .tanka-table td,
+  .tanka-table th {
+    border-top: none;
+  }
+
+  
+/****************************************************/
+/* 商品管理 */
+/****************************************************/
+  .outbox-col2 .col2-inner-l-syouhin {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    float: left;
+    height: auto;
+    padding-right: 1%;
+    width: 40%;
+    *width: 49%;/* IE7 */
+  }
+
+  .outbox-col2 .col2-inner-r-syouhin {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    float: right;
+    height: auto;
+    width: 60%;
+    *width: 49%;/* IE7 */
+  }
+  
+  .outbox-col2-print .col2-inner-l-print {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+
+    height: auto;
+    padding-right: 1%;
+    width: 100%;
+    *width: 49%;/* IE7 */
+  }
+
+  /* 商品一括登録 */
+  .caution_bill_complete{
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    width: 50%;
+    height: auto;
+    margin: 0 auto 20px;
+    padding: 20px;
+    background: #efefef;
+    border: 1px solid #9e9e9e;
+  }
+  
+  .bill_complete_table {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    padding: 20px;
+    text-align: left;
+    /*font-size: 18px;
+    font-size: 1.8rem;*/
+  }
+  
+  .upload-table {
+    max-height: 200px;
+    width: 100%;
+    overflow: auto;
+  }
+  
+  /*  */
+  .cat-select {
+    display: block;
+    width: 100%;
+  }
+
+  .cat-select .select-l {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+  }
+
+  .cat-select .select-m {
+    vertical-align: middle;
+    text-align: center;
+    width: 100%;
+    padding: 10px;
+    height: auto;
+  }
+  
+  .cat-select .select-m #setMainCategoryBtn {
+    display: inline;
+    margin-right: 50px;
+  }
+  
+  .cat-select .select-r {
+    display: block;
+    vertical-align: middle;
+    width: 100%;
+  }
+
+  .cat-select .select-l select,
+  .cat-select .select-r select {
+    font-size: 12px;
+    font-size: 1.2rem;
+    height: 100%;
+  }
+
+  .cat-select .select-m .add-btn {
+    background: #fff;
+    border: 1px solid #444;
+    width: 70px;
+    -moz-box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+    -webkit-box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+    box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+  }
+
+  .cat-select .select-m .del-btn {
+    background: #444;
+    color: #fff;
+    width: 70px;
+    -moz-box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+    -webkit-box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+    box-shadow: 0px 0px 2px rgba(000,000,000,0.3);
+  }
+  
+  .cat-select .select-m .del-btn:hover,
+  .cat-select .select-m .add-btn:hover {
+    left: 1px;
+    position: relative;
+    top: 1px;
+  }
+  
+  .main-cat-btn {
+    background: #c00;
+    border:none;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    color: #fff;
+    height: 20px;
+    margin: 5px 0;
+    text-align: center;
+  }
+
+  .main-cat-btn:hover {
+    left: 1px;
+    position: relative;
+    top: 1px;
+  }
+  
+  .prod-set-select {
+    width: 96%;
+    height: 100%;
+  }
+  
+  #material {
+    border:none;
+  }
+  
+  #material td {
+    border:none;
+    border-bottom: 1px solid #c6c6c6;
+  }
+  
+  #material tr:last-child td {
+    border:none;
+    border-bottom: 1px solid #c6c6c6;
+  }
+
+  
+/****************************************************/
+/* 基本設定 */
+/****************************************************/
+.b-table th {
+  width: 25%;
+}
+  
+  /* 配送業者設定 */
+  .setting-table th,
+  .setting-table td {
+    padding: 10px;
+  }
+  
+  .deliv-table {
+    width: 49%;
+  }
+  
+  .deliv-table .deliv-day {
+    margin-right: 10px;
+    padding: 0 5px;
+    text-align: right;
+    width: 50%;
+  }
+  
+  .deliv-list {
+    max-height: 300px;
+  }
+  
+  .formtitle.ikkatsu {
+    margin: 20px 0;
+  }
+  
+  .ikkatsu-box {
+    display: inline-block;
+    float: left;
+    margin-left: 20px;
+  }
+  
+  .ikkatsu-box .ikkatsu-day {
+    width: 10%;
+    margin-right: 5px;
+    padding: 0 5px;
+    text-align: right;
+  }
+  
+  .ikkatsu-box .ikkatsu-time {
+    margin-left: 20px;
+  }
+  
+  .ikkatsu-box .btn-ikkatsu {
+    margin-left: 5px;
+  }
+  
+  .deliv-r-list {
+    max-height: 250px;
+  }
+  
+  .regular-table .r-weight {
+    width: 30%;
+    text-align: right;
+    margin-right: 5px;
+    padding: 0 3px;
+  }
+  
+  .regular-table .r-price,
+  .regular-table .ikkatsu-price {
+    width: 50%;
+    text-align: right;
+    margin-right: 5px;
+    padding: 0 3px;
+  }
+  
+  .r-ikkatsu-box {
+    width: 100%;
+  }
+  
+  .r-ikkatsu-box .btn-ikkatsu {
+    margin-left: 5px;
+  }
+  
+  .e-table input[type="text"] {
+    text-align: right;
+  }
+
+  
+  .e-table th {
+    font-size: 11px;
+    font-size: 1.1rem;
+  }
+  
+  .addbox {
+    text-align: left;
+    margin: 20px 0 10px;
+  }
+  
+  .e-deliv-time {
+    font-size: 12px;
+    font-size: 1.2rem;
+    padding: 1px;
+  }
+  
+  /* タグ管理 */
+  .tag-list-num {
+    margin: 10px 0;
+    padding: 5px;
+    width: 40%;
+    float: left;
+  }
+  
+  .tag-result-num {
+    color: #c00;
+    margin-left: 10px;
+    line-height: 1.7;
+  }
+  
+/* 営業日設定 */
+  
+    .contebox .formtitle-cal h2 {
+    color: #FFF;
+    font-size: 16px;
+    font-size: 1.6rem;
+    font-weight: 400;
+    height: 28px;
+    line-height: 2em;
+    width: 70%;
+    background: #f6a828;
+    border: 1px solid #e78f08;
+    font-weight: bold;
+    border-radius:5px; /* 角丸 */
+    text-align: center;  
+    }
+  
+    .form-table.table-cal th {
+    text-align: center;
+    text-indent: 3px;
+  }
+  
+  .form-table.table-h td {
+    text-align: center;
+  }
+  
+  .day-table .thstyle1 {
+    width: 20%;
+  }
+
+  .day-table .tdstyle1 {
+    width: 80%;
+  }
+  
+  .day-table1 .title-th {
+    background: #fdf5e6 !important;
+    border-bottom:  2px solid #f1eee7;
+    border-right:  2px solid #fdf5e6;
+    font-weight: 400 !important;
+    font-size: 16px;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .day-table1 .thstyle1 {
+    width: 20%;
+  }
+
+  .day-table1 .tdstyle1 {
+    width: 80%;
+  }
+  
+  .cal-table {
+    width: 70%;
+  }
+  
+  .cal-table .thstyle {
+    background: #fffacd;
+    border-left: 2px solid #f1eee7;
+    border-top: 2px solid #f1eee7;
+    border-right: 2px solid #f1eee7;
+    border-bottom: 2px solid #f1eee7;
+    text-align: center;
+    width: 14%;
+  }
+  
+    .cal-table .thstyle-sun {
+    background: #fffacd;
+    border-left: 2px solid #f1eee7;
+    border-top: 2px solid #f1eee7;
+    border-right: 2px solid #f1eee7;
+    border-bottom: 2px solid #f1eee7;
+    text-align: center;
+    width: 14%;
+    color:red;
+  }
+  
+    .cal-table .thstyle-sat {
+    background: #fffacd;
+    border-left: 2px solid #f1eee7;
+    border-top: 2px solid #f1eee7;
+    border-right: 2px solid #f1eee7;
+    border-bottom: 2px solid #f1eee7;
+    text-align: center;
+    width: 14%;
+    color:blue;
+  }
+
+  .cal-table .tdstyle {
+    border-left: 2px solid #f1eee7;
+    border-top: 2px solid #f1eee7;
+    border-right: 2px solid #f1eee7;
+    border-bottom: 2px solid #f1eee7;
+    text-align: center;
+    width: 14%;
+  }
+
+  .cal-table .thstyle:last-child {
+    border-right: 2px solid #f1eee7;
+  }
+
+  .cal-table .tdstyle:last-child {
+    border-bottom: 2px solid #f1eee7;
+    border-right: 2px solid #f1eee7;
+  }
+  
+  
+    .tdstyle.bg-pink {
+    background: #ffb6c1;
+  }
+  
+  
+    .tdstyle.bg-blue {
+    background: #87CEEB;
+  }
+  
+    .sun {
+    color: red;
+  }
+  
+    .sat {
+    color: blue;
+  }
+
+
+
+/****************************************************/
+/* マスター共通 */
+/****************************************************/
+  
+  .formtitle .formtitle-l {
+    width: 35%;
+    display: inline-block;
+ }
+  .formtitle .formtitle-r {
+    width: 64%;
+    text-align: right;
+    display: inline-block;
+    vertical-align: top;
+ }
+
+ /* 商品一括登録 */
+ .tablestyle-base {
+    margin: 20px 0;
+    height: auto;
+    background: rgba(255,255,255,0.9);
+ }
+ 
+.tablestyle-base th {
+    background: #b9e6e6;
+    border: 1px solid #c6c6c6;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 10px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+ 
+  .bulk-table .thstyle {
+    width: 25%;
+  }
+
+  .bulk-table .tdstyle {
+    width: 75%;
+  }
+
+  .bulk-list .th-tytle,
+  .bulk-confirm .th-tytle {
+    background: #fdf5e6;
+    text-align: left;
+    width: 100%;
+  }
+
+  .bulk-title {
+    color: #666;
+    font-size: 16px;
+    padding-top: 5px;
+    text-indent: 8px;
+  }
+
+  .bulk-title:before {
+    background: #666 !important;
+    content: "";
+    display: block;
+    float: left;
+    height: 15px;
+    margin-top: 1px;
+    width: 8px;
+  }
+
+  .bulk-list th {
+    text-align: center;
+  }
+
+  .bulk-list .thstyle1,
+  .bulk-list .tdstyle1 {
+    width: 15%;
+  }
+
+  .bulk-list .thstyle2,
+  .bulk-list .tdstyle2 {
+    width: 45%;
+  }
+
+  .bulk-list .thstyle3,
+  .bulk-list .tdstyle3 {
+    width: 20%;
+  }
+  
+  .bulk-list .tdstyle3 {
+    padding: 20px;
+    text-align: left;
+  }
+  
+  .b-confirm-title {
+    background: #fdf5e6;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #666;
+    font-size: 16px;
+    margin: 0 auto;
+    padding: 10px;
+    text-indent: 8px;
+    width: 100%;
+  }
+
+  .b-confirm-title:before {
+    background: #666 !important;
+    content: "";
+    display: block;
+    float: left;
+    height: 15px;
+    margin-top: 1px;
+    width: 8px;
+  }
+
+  .bulk-confirm {
+    font-size: 12px;
+    margin: 0 auto;
+  }
+
+  .bulk-confirm th {
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+
+  .bulk-confirm td {
+    white-space: nowrap;
+    padding: 4px 8px;
+    border: 1px solid #c6c6c6;
+  }
+  
+  .bulk-new {
+    background: #ffb6c1;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    padding: 5px 10px;
+    width: 1290px;
+  }
+  
+  .width1290 {
+    width: 1290px;
+  }
+  
+  .bg-pink {
+    background: #ffb6c1;
+  }
+  
+  .bulk-bg-white {
+    background: rgba(255,255,255,.3);
+  }
+  
+  .padding-top20 {
+    padding-top: 20px;
+  }
+  
+  .errormess-box {
+    margin: 20px 0;
+    text-align: left;
+    width: 100%;
+  }
+  
+  .overflow-v {
+    overflow: auto !important;
+  }
