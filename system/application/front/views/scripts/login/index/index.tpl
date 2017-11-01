@@ -1,30 +1,45 @@
-<h2>
-    <img src="{$smarty.const.FRONT_IMG_SSL}side/title_login.jpg" width="166" height="35" alt="プロユーザー" />
-</h2>
-<div id="loginarea">
-    <form name="login_form" id="login_form" method="post" action="{$smarty.const.SSL_URL}/login" enctype="multipart/form-data">
-        <input type="hidden" name="mode" value="">
-        <div id="login">
-            {assign var="key" value="d_customer_EmailAddress"}
-            <p><img src="{$smarty.const.FRONT_IMG_SSL}side/icon_mail.gif" width="70" height="18" alt="メールアドレス" /><input type="text" name="{$key}" class="box96" value="" style="ime-mode: disabled;"/></p>
-                {assign var="key" value="d_customer_Password"}
-            <p><img src="{$smarty.const.FRONT_IMG_SSL}side/icon_pw.gif" width="70" height="18" alt="パスワード" /><input type="password" name="{$key}" class="box96" /></p>
+<div class="container">
+  <div class="page-header page-top">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="bs-component">
+          <div class="jumbotron white main2">
+            <div class="page-header col-lg-6">
+              <h1 id="type">Login</h1>
+            </div>
+            <form name="login_form" id="login_form" class="form-horizontal" method="post" action="{$smarty.const.URL}/login" enctype="multipart/form-data">
+              <input type="hidden" name="mode" value="">
+              <fieldset>
+                {if $stErrorMessage}
+                <div class="alert alert-dismissible alert-danger">{$stErrorMessage}</div>
+                {/if}
+                <div class="form-group{if $stErrorMessage} has-error{/if}">
+                  <label for="inputEmail" class="col-lg-4 control-label">メールアドレス</label>
+                  <div class="col-lg-8">
+                    {assign var="key" value="d_customer_EmailAddress"}
+                    <input name="{$key}" value="{$arrForm[$key]}" type="text" class="form-control" id="inputEmail" placeholder="メールアドレス">
+                  </div>
+                </div>
+                <div class="form-group{if $stErrorMessage} has-error{/if}">
+                  <label for="inputPassword" class="col-lg-4 control-label">パスワード</label>
+                  <div class="col-lg-8">
+                    {assign var="key" value="d_customer_Password"}
+                    <input name="{$key}" type="password" class="form-control" id="inputPassword" placeholder="パスワード">
+                  </div>
+                </div><br>
+                <div class="form-group">
+                  <div class="" style="text-align: center;">
+                    <button type="button" id="loginBtn" class="btn btn-primary btn-lg pc_mb20" style="width: 240px;">ログイン</button><br><br>
+                    <a href="{$smarty.const.URL}/entry" class="btn btn-default">新規登録はこちら</a>
+                  </div>
+                </div>
+              </fieldset>
+            </form>
+          </div>
         </div>
-        <p class="mini">
-            <a href="{$smarty.const.SSL_URL}/reminder">パスワードを忘れた方はこちら</a>
-        </p>
-        <p class="mini">
-            <a href="{$smarty.const.SSL_URL}/entry">プロユーザー登録はこちら</a>
-        </p>
-        <p>
-            {assign var="key" value="login_memory"}
-            <input type="checkbox" name="{$key}" value="1"  />
-            <img src="{$smarty.const.FRONT_IMG_SSL}header/memory.gif" width="110" height="11" alt="記憶" />
-        </p>
-        <p class="btn">
-            <a href="javascript:void(0)"><img onmouseover="chgImgImageSubmit('{$smarty.const.FRONT_IMG_SSL}side/button_login_on.gif', this)" onmouseout="chgImgImageSubmit('{$smarty.const.FRONT_IMG_SSL}side/button_login.gif', this)" src="{$smarty.const.FRONT_IMG_SSL}side/button_login.gif" class="box51" alt="ログイン" id="loginBtn"/></a>
-        </p>
-    </form>
+      </div>
+    </div>
+  </div>
 </div>
 <script>
     $(function () { 
@@ -37,7 +52,7 @@
     function setModeForSide(mode) {
         var em = document.login_form;
         em.mode.value = mode;
-        em.action = "{$smarty.const.SSL_URL}/login";
+        em.action = "{$smarty.const.URL}/login";
 
         // 必須項目チェック
         if (em.d_customer_EmailAddress.value == "" || em.d_customer_Password.value == "") {

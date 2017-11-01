@@ -10,6 +10,7 @@
 
     require_once COMMON_LIB_PATH . "Common/Basis/Basis.php";
     require_once COMMON_LIB_PATH . "Common/Common.php";
+    require_once COMMON_LIB_PATH . "Common/Image.php";
     require_once COMMON_LIB_PATH . "Common/Customer/Customer.php";
     require_once COMMON_LIB_PATH . "Common/Data/Format.php";
 //    require_once COMMON_LIB_PATH . "Common/Order/Order.php";
@@ -34,8 +35,14 @@
 //    define("SSL_URL", "https://" . DOMAIN_SSL);
     define("URL", "http://" . DOMAIN_SSL);
     define("IMG_URL", URL . "/img/");
+//    define("SHEET_IMG_URL", URL . "/img/upload/");
+    define("SHEET_IMG_URL", dirname(__FILE__) . "/img/upload/");
     define("CSS_URL", URL . "/css/");
     define("JS_URL", URL . "/js/");
+    define("TEMP_IMG_DIR", dirname(__FILE__) . "/img/upload/");
+    define("UPLOAD_IMG_DIR", dirname(__FILE__) . "/img/upload/");
+//    define("TEMP_IMG_DIR", URL . "/img/upload/");
+//    define("UPLOAD_IMG_DIR", URL . "/img/upload/");
     
     define("SITE_TITLE", "マイオーダーシート - スタバや二郎のおすすめオーダーをゲット");
     define("SITE_DESCRIPTION", "今人気のオーダーがわかる！スタバや二郎によく行く人は必見！");

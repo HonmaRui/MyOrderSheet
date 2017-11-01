@@ -10,6 +10,7 @@
 
     require_once COMMON_LIB_PATH . "Common/Basis/Basis.php";
     require_once COMMON_LIB_PATH . "Common/Common.php";
+    require_once COMMON_LIB_PATH . "Common/Image.php";
     require_once COMMON_LIB_PATH . "Common/Customer/Customer.php";
     require_once COMMON_LIB_PATH . "Common/Data/Format.php";
 //    require_once COMMON_LIB_PATH . "Common/Order/Order.php";

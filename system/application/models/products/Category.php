@@ -85,16 +85,16 @@ class Application_Model_Category extends Application_Model_Abstract {
             throw new Zend_Exception($e->getMessage());
         }
     }
-
+    
     /**
      * 第一引数に紐づくデータを取得する。
      * 第二引数が指定されている場合、その配列を取得対象カラムとする。
      * 
-     * @param   array   $arrWhere     検索条件のキーと値の連想配列
-     * @param   array   $arrColumn    取得対象のカラム名を格納した配列
-     * @return  array   $arrResult    検索結果
+     * @param   integer $iID        ID(PK)
+     * @param   array   $arrColumn  取得対象のカラム名を格納した配列
+     * @return  array   $arrResult  検索結果
      */
-    public function find($arrWhere, $arrColumn = "") {
+    public function find($iID, $arrColumn = "") {
         
         try {
             // 取得カラムの指定が無ければ全てのカラムを取得する。
@@ -104,10 +104,7 @@ class Application_Model_Category extends Application_Model_Abstract {
             
             $objSelect = &$this->objSlaveDb->select()->from(array($this->getTableName()), $arrColumn);
             $objSelect->where("d_category_DelFlg = ? ", 0);
-            
-            foreach ($arrWhere as $key => $value) {
-                $objSelect->where($key . " = ? ", $value);
-            }
+            $objSelect->where("d_category_CategoryID = ? ", $iID);
 
             // select文を実行する
             $objSql = $this->objSlaveDb->query($objSelect);

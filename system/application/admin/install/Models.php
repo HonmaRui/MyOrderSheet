@@ -9,7 +9,7 @@
     require_once MODEL_PATH . "customer/Customer.php";
     require_once MODEL_PATH . "customer/CustomerRank.php";
     require_once MODEL_PATH . "customer/CustomerRankStandard.php";
-    require_once MODEL_PATH . "order/Order.php";
+    require_once MODEL_PATH . "order/OrderSheet.php";
     require_once MODEL_PATH . "products/Category.php";
     require_once MODEL_PATH . "products/CategoryCount.php";
     require_once MODEL_PATH . "products/CategoryRelated.php";

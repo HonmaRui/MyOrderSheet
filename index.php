@@ -98,17 +98,6 @@ $route = new Zend_Controller_Router_Route(
 );
 $router->addRoute("entry_index", $route);
 
-// 会員登録 > 情報入力
-$route = new Zend_Controller_Router_Route(
-    "/entry/regist",
-    array(
-        "module"     => "entry",
-        "controller" => "index",
-        "action"     => "regist",
-        )
-);
-$router->addRoute("entry_regist", $route);
-
 // 会員登録 > 入力内容確認
 $route = new Zend_Controller_Router_Route(
     "/entry/confirm",
@@ -185,6 +174,29 @@ $route = new Zend_Controller_Router_Route(
         )
 );
 $router->addRoute("mypage_refusal_complete", $route);
+
+// ユーザー情報閲覧ページ
+$route = new Zend_Controller_Router_Route(
+    "/customer/:customerID",
+    array(
+        "module"     => "customer",
+        "controller" => "index",
+        "action"     => "index",
+        "customerID" => null,
+        )
+);
+$router->addRoute("customer_index", $route);
+
+// シート情報取得API
+$route = new Zend_Controller_Router_Route(
+    "/get-sheet-info",
+    array(
+        "module"     => "index",
+        "controller" => "index",
+        "action"     => "get-sheet-info",
+        )
+);
+$router->addRoute("index_get_sheet_info", $route);
 
 // アプリケーション及びブートストラップを作成して、実行します
 $application = new Zend_Application(

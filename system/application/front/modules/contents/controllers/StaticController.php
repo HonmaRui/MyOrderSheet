@@ -51,6 +51,7 @@ class Contents_StaticController extends Zend_Controller_Action {
             if ($this->objFrontSess->Login) {
                 $this->bIsLogin = true;
                 $this->view->assign("bIsLogin", $this->bIsLogin);
+                $this->view->assign("stCustomerName", $this->objFrontSess->Name);
             }
             
         } catch (Zend_Exception $e) {

@@ -1,0 +1,186 @@
+@charset "UTF-8";
+/*!
+ * bootstrap.css をこのCSSで上書きする前提なことに注意する
+ */
+
+@import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
+@import url(https://fonts.googleapis.com/earlyaccess/mplus1p.css);
+body { padding-top: 80px; }
+@media ( min-width: 768px ) {
+    #banner {
+        min-height: 300px;
+        border-bottom: none;
+    }
+    .bs-docs-section {
+        margin-top: 8em;
+    }
+    .bs-component {
+        position: relative;
+    }
+    .bs-component .modal {
+        position: relative;
+        top: auto;
+        right: auto;
+        left: auto;
+        bottom: auto;
+        z-index: 1;
+        display: block;
+    }
+    .bs-component .modal-dialog {
+        width: 90%;
+    }
+    .bs-component .popover {
+        position: relative;
+        display: inline-block;
+        width: 220px;
+        margin: 20px;
+    }
+    .progress {
+        margin-bottom: 10px;
+    }
+    #pc { display: none; }
+    #pc-data { display: none; }
+}
+@media ( max-width: 768px ) {
+    #search-form { display: inline; width: 80%;}
+    #search-btn { margin-bottom: 3px; }
+    #sp { display: none; }
+    #sp-data { display: none; }
+    .sp_pr0 { padding-right: 0px; }
+}
+@media ( min-width: 1200px ) {
+    #yes-pc { display: none; }
+}
+@media ( max-width: 1200px ) {
+    #no-pc { display: none; }
+}
+.nav-tabs { margin-bottom: 15px; }
+.jumbotron { background:url(../img/main.png) center no-repeat; background-size: cover;　color: white;}
+.main2 { background:url(../img/main2.png) center no-repeat; background-size: cover;}
+.main3 { background:url(../img/main3.png) center no-repeat; background-size: cover;}
+.white { color: white; }
+.font0 { font-size: 0.7em; }
+.font1 { font-family: 'Rounded Mplus 1c'; }
+.font2 { font-family: 'Mplus 1p'; font-weight: 400 !important;}
+.fs1em { font-size: 1em !important; }
+.sheet-text { font-size: 1.1em !important; font-weight: 600 !important; }
+.alert-danger {
+    color: #ea1c0d;
+    background-color: #fdd9d9;
+    border-color: #ea1c0d;
+}
+footer {
+    padding: 40px 0;
+    color: #eee;
+    background-color: #333;
+}
+footer .copyright {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.social-button {
+    position: relative;
+    padding: 10px 0;
+    margin: 0 auto !important;
+    overflow: hidden;
+}
+.social-button > ul {
+    position: relative;
+    left: 50%;
+    float: left;
+    padding: 0;
+    margin: 0;
+    list-style: outside none none;
+}
+.social-button > ul > li {
+    position: relative;
+    left: -50%;
+    float: left;
+    padding: 0;
+    margin: 0 10px;
+}
+.order-under {
+    min-height: 15px;
+    padding: 15px 0px 0px 0px;
+    background-color: white;
+    clear: both;
+    text-align: right;
+}
+.border-panel-success {
+    border-top: 1px solid #cbe7c7;
+    border-radius: 1px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+.border-panel-warning {
+    border-top: 1px solid #ffd3b3;
+    border-radius: 1px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+.border-panel-info {
+    border-top: 1px solid #c1ebfc;
+    border-radius: 1px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, .05);
+}
+
+.photo {
+    width:25% !important;
+    height:150px;
+    overflow:hidden;
+    position:relative;
+}
+.photo img {
+    position: absolute;
+    left: -100%;
+    right: -100%;
+    margin: auto;
+    width: 100%;
+    height: auto;
+}
+.text-overflow {
+    overflow: hidden;
+    position: relative;
+    width: 390px;
+}
+.text-overflow .ellipsis {
+    background-color: #67bcff;
+    color: white;
+    padding: 3px 9px;
+    bottom: 0px;
+    position: absolute;
+    right: 0px;
+}
+.with-height-limit {
+    height: 150px;
+    margin-bottom: 20px;
+}
+.order-right {  padding-right: 0; font-size: 0.8em !important;}
+@media ( max-width: 1200px ) {
+    .order-left { float: left; width: 25%;}
+    .order-right {  width: 75%; }
+}
+@media ( max-width: 768px ) {
+    .order-left { float: left; width: 25%;}
+    .order-right {  width: 70%; }
+}
+@media ( max-width: 768px ) {
+    .order-left { float: left; width: 25%;}
+    .order-right {  width: 70%; }
+}
+@media screen and (min-width: 768px) {
+    .order-left { float: left; width: 25%;}
+    .order-right {  width: 70%; }
+}
+
+.page-top { margin-top: 3% !important; margin-bottom: 0px !important; }
+@media ( max-width: 1200px ) {
+    .page-top { margin-top: 10% !important;}
+}
+@media ( max-width: 992px ) {
+    .page-top { margin-top: 13% !important;}
+}
+@media ( max-width: 768px ) {
+    .page-top { margin-top: 3% !important;}
+}

@@ -3,7 +3,7 @@
 /**
  * 顧客テーブル用モデル
  *
- * @author     M-PIC本間
+ * @author     
  * @version    v1.0
  */
 class Application_Model_Customer extends Application_Model_Abstract 
@@ -105,9 +105,6 @@ class Application_Model_Customer extends Application_Model_Abstract
         $this->objMasterDb = Zend_Registry::get("MASTER_DATABASE");
         // 参照系
         $this->objSlaveDb = Zend_Registry::get("SLAVE_DATABASE");
-        // Session 定義（ログイン情報）
-        $this->objAdminSess = new Zend_Session_Namespace("Admin");
-        $this->objFrontSess = new Zend_Session_Namespace("Front");
         
         // 総件数
         $this->totalCount = 0;
@@ -240,11 +237,6 @@ class Application_Model_Customer extends Application_Model_Abstract
             $stTable = $this->getTableName();
             $arrParams = $arrData;
             $arrParams["d_customer_UpdatedTime"] = date("Y-m-d H:i:s");
-            if ($bIsAdmin) {
-                $arrParams["d_customer_UpdatedByID"] = $this->objAdminSess->MemberID;
-            } else {
-                $arrParams["d_customer_UpdatedByID"] = 0;
-            }
             $stWhere = $this->objMasterDb->quoteInto("d_customer_CustomerID = ? ", $arrData["d_customer_CustomerID"]);
             $this->objMasterDb->update($stTable, $arrParams, $stWhere);
 
@@ -448,13 +440,6 @@ class Application_Model_Customer extends Application_Model_Abstract
             $arrParams = $arrData;
             $arrParams["d_customer_CreatedTime"] = date("Y-m-d H:i:s");
             $arrParams["d_customer_UpdatedTime"] = date("Y-m-d H:i:s");
-            if ($bIsAdmin) {
-                $arrParams["d_customer_CreatedByID"] = $this->objAdminSess->MemberID;
-                $arrParams["d_customer_UpdatedByID"] = $this->objAdminSess->MemberID;
-            } else {
-                $arrParams["d_customer_CreatedByID"] = 0;
-                $arrParams["d_customer_UpdatedByID"] = 0;
-            }
             $arrParams["d_customer_DelFlg"] = "0";
             $this->objMasterDb->insert($stTable, $arrParams);
 

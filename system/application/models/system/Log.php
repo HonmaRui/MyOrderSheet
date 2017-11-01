@@ -3,7 +3,7 @@
 /**
  * ログ保存用モデル
  *
- * @author     M-PIC鈴木
+ * @author     
  * @version    v1.0
  */
 class Application_Model_Log extends Application_Model_Abstract 
@@ -24,10 +24,6 @@ class Application_Model_Log extends Application_Model_Abstract
         $this->objMasterDb = Zend_Registry::get("MASTER_DATABASE");
         // 参照系
         $this->objSlaveDb = Zend_Registry::get("SLAVE_DATABASE");
-        
-        // セッション
-        $this->objAdminSess = new Zend_Session_Namespace("Admin");
-        $this->objFrontSess = new Zend_Session_Namespace("Front");
     }
     
     /**

@@ -1,6 +1,6 @@
 <?php
 
-class Login_IndexController extends Zend_Controller_Action {
+class Ordersheet_IndexController extends Zend_Controller_Action {
 
     /***
      * 
@@ -16,7 +16,10 @@ class Login_IndexController extends Zend_Controller_Action {
             
             // Library & Models
             $this->objMypage = new Mypage();
+            $this->objPaginator = new Paginator();
+            $this->mdlCategory = new Application_Model_Category();
             $this->mdlCustomer = new Application_Model_Customer();
+            $this->mdlOrderSheet = new Application_Model_OrderSheet();
             
             // 共通テンプレ生成の為のクラスを生成
             $layout = new Zend_Layout();
@@ -51,9 +54,13 @@ class Login_IndexController extends Zend_Controller_Action {
             if ($this->objFrontSess->Login) {
                 $this->bIsLogin = true;
                 $this->view->assign("bIsLogin", $this->bIsLogin);
+                $this->view->assign("stCustomerName", $this->objFrontSess->Name);
             }
             
-            $this->stMode = $this->_getParam("mode");
+            // カテゴリ
+            $arrCategory = CommonTools::changeDbArrayForFormTag($this->mdlCategory->fetchAll(array(
+                "d_category_CategoryID", "d_category_CategoryName")));
+            $this->view->assign("arrCategory", $arrCategory);
             
         } catch (Zend_Exception $e) {
             throw new Zend_Exception($e->getMessage());
@@ -62,40 +69,67 @@ class Login_IndexController extends Zend_Controller_Action {
     
     /***
      * 
-     * ログインページ表示アクション
+     * オーダーシート検索ページ表示アクション
      * 
      */
     public function indexAction() {
 
         try {
-        
-            // 既にログイン済みの場合はトップへ
-            if (!empty($this->objFrontSess->memberID)) {
-                return $this->_redirect(URL);
+
+            // ページ遷移設定
+            $iPageNumber = $this->_getParam("page");
+            if (!is_numeric($iPageNumber)) {
+                $iPageNumber = 1;
+            }
+            $iPageLimit = $this->_getParam("limit");
+            if (!is_numeric($iPageLimit)) {
+                $iPageLimit = 10;
             }
             
+            $arrForm = $this->objFormReq->getQuery();
+
             if (!$this->objFormReq->isPost()) {
                 // Get request
-            } else {
-                // Post request
-                $arrForm = $this->objFormReq->getPost();
-                
-                switch ($this->stMode) {
-                    case "login":
-                        $arrData = $this->objMypage->isJudgeLogin($arrForm["d_customer_EmailAddress"], $arrForm["d_customer_Password"]);
-                        if ($arrData) {
-                            return $this->_redirect(URL);
-                        } else {
-                            // エラーページへ遷移
-                            $stErrorMessage = "メールアドレスもしくはパスワードが正しくありません。";
-                        }
+                // ソート順
+                $arrSort = array();
+                $stSort = "";
+                switch ($arrForm["search_sort"]) {
+                    case 1: // 価格が安い順
+                        $stSort = "d_product_SortPrice ASC";
                         break;
-                    default:
+                    case 2: // 価格が高い順
+                        $stSort = "d_product_SortPrice DESC";
+                        break;
+                    case 3: // 新しい順
+                        $stSort = "d_product_CreatedTime DESC";
+                        break;
+                    case 4: // おすすめ順
+                        $stSort = "sps.d_scrap_pdfdl_sum_TotalCount DESC";
                         break;
                 }
+
+                // 商品情報取得
+                $this->mdlOrderSheet->setPageLimit($iPageLimit);
+                $this->mdlOrderSheet->setPageNumber($iPageNumber);
+                $this->mdlOrderSheet->setSearchCondition($arrForm, array("*"), $stSort);
+                $arrResult = $this->mdlOrderSheet->search(true);
+
+                if ($arrResult) {
+                    $this->view->assign("arrResult", $arrResult);
+
+                    // ページごとの表示数の定義を取得
+                    $objPaginator = $this->objPaginator->getPaginator($this->mdlOrderSheet->totalCount, $iPageLimit, $iPageNumber);
+                   // ページ推移ボタンの情報を取得
+                    $objPaginateInfo = $this->objPaginator->getPaginateInfo($objPaginator);
+                    $this->view->assign("iPageLimit", $iPageLimit);
+                    $this->view->assign("iPageNumber", $iPageNumber);
+                    $this->view->assign("objPaginateInfo", $objPaginateInfo);
+                    $this->view->assign("iCount", $this->mdlOrderSheet->totalCount);
+                }
+            } else {
+                // Post request
             }
             
-            $this->view->assign("stErrorMessage", $stErrorMessage);
             $this->view->assign("arrForm", $arrForm);
             
         } catch (Zend_Exception $e) {

@@ -1,15 +1,13 @@
-<div id="one_maincolumn">
-    <!--▼CONTENTS-->
-    <div id="under02column">
-        <div id="under02column_error">
-            <div class="messagearea">
-                <p class="error">{$stErrorMessage}</p>
+<div class="container">
+  <div class="page-header" style="margin: 120px 0 120px;">
+    <div class="row">
+        <div class="col-lg-12">
+          <div class="bs-component">
+            <div class="alert alert-dismissible alert-warning">
+              <p>{$stErrorMessage}</p>
             </div>
-
-            <div class="tblareabtn">
-                <a href="javascript:history.back()" onmouseOver="chgImg('{$smarty.const.FRONT_IMG_SSL}common/b_back_on.gif', 'b_back');" onmouseOut="chgImg('{$smarty.const.FRONT_IMG_SSL}common/b_back.gif', 'b_back');"><img src="{$smarty.const.FRONT_IMG_SSL}common/b_back.gif" width="150" height="30" alt="戻る" name="b_back" id="b_back" /></a>
-            </div>
+          </div>
         </div>
     </div>
-    <!--▲CONTENTS-->        
+  </div>
 </div>

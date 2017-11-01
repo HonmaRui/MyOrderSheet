@@ -41,20 +41,10 @@ class Mypage {
                     $objValidate->Execute(array($stKey => $stColumnName), array("Email", $arrForm[$stKey]));
                     $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
                     break;
-                
-                case "regist":
+                case "entry":
                 case "change":
-                    $stKey = "d_customer_CompanyName";
-                    $stColumnName = "会社名";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
                     $stKey = "d_customer_Name";
                     $stColumnName = "氏名";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_NameKana";
-                    $stColumnName = "氏名（フリガナ）";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Kana", $arrForm[$stKey]));
                     $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
                     
                     $stKey = "d_customer_EmailAddress";
@@ -62,92 +52,13 @@ class Mypage {
                     $objValidate->Execute(array($stKey => $stColumnName), array("Email", $arrForm[$stKey]));
                     $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
                     
-                    $stKey = "d_customer_EmailAddress-confirm";
-                    $stColumnName = "メールアドレス（確認用）";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Email", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
                     $stKey = "d_customer_Password";
                     $stColumnName = "パスワード";
                     $objValidate->Execute(array($stKey => $stColumnName), array("AlphaNumeric", $arrForm[$stKey]));
                     $objValidate->Execute(array($stKey => $stColumnName), array("MaxLength", $arrForm[$stKey], "4"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("MinLength", $arrForm[$stKey], "10"));
+                    $objValidate->Execute(array($stKey => $stColumnName), array("MinLength", $arrForm[$stKey], "12"));
                     $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_Password-confirm";
-                    $stColumnName = "パスワード（確認用）";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("AlphaNumeric", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("MaxLength", $arrForm[$stKey], "4"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("MinLength", $arrForm[$stKey], "10"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_Zip";
-                    $stColumnName = "郵便番号";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Numeric", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Length", $arrForm[$stKey], "7"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-
-                    $stKey = "d_customer_JobID";
-                    $stColumnName = "業種";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_PrefCode";
-                    $stColumnName = "都道府県";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_Address1";
-                    $stColumnName = "ご住所1";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_Address2";
-                    $stColumnName = "ご住所2";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_customer_TelNo";
-                    $stColumnName = "お電話番号";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Numeric", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("MinLength", $arrForm[$stKey], "11"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    break;
-                
-                case "delivery_detail":
-                    $stKey = "d_order_delivery_CompanyName";
-                    $stColumnName = "会社名";
-//                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_Name";
-                    $stColumnName = "氏名";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_NameKana";
-                    $stColumnName = "氏名（フリガナ）";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Kana", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-
-                    $stKey = "d_order_delivery_Zip";
-                    $stColumnName = "郵便番号";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Numeric", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Length", $arrForm[$stKey], "7"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_PrefCode";
-                    $stColumnName = "都道府県";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_Address1";
-                    $stColumnName = "ご住所1";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_Address2";
-                    $stColumnName = "ご住所2";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    
-                    $stKey = "d_order_delivery_TelNo";
-                    $stColumnName = "お電話番号";
-                    $objValidate->Execute(array($stKey => $stColumnName), array("Numeric", $arrForm[$stKey]));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("MinLength", $arrForm[$stKey], "11"));
-                    $objValidate->Execute(array($stKey => $stColumnName), array("NotEmpty", $arrForm[$stKey]));
-                    break;               
+                    break;              
                 default:
                     break;
             }

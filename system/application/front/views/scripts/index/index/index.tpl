@@ -1,57 +1,111 @@
 <div class="container">
-  <div class="page-header" style="margin-top: 3% !important; margin-bottom: 0px !important;">
+  <div class="page-header page-top">
     <div class="row">
       <div class="col-lg-12">
         <div class="bs-component">
+          {if !$arrNewOrderSheet}
           <div class="jumbotron white">
             <h1 class="font1">最高のオーダーをあなたに</h1>
             <p class="font2 fs1em">スターバックス・コーヒー、サブウェイ、二郎系ラーメン...好みのトッピング・オーダーを選択する機会は増えましたが、いつも「ふつう」や「お店のおすすめ」を選んでしまってはいませんか？<br>そんなあなたに マイオーダーシート は最高のオーダーをご紹介致します！</p>
-            <p><a class="btn btn-warning btn-lg"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> 人気オーダーシートを見る</a></p>
+            <p><a class="btn btn-warning btn-lg" href="{$smarty.const.URL}/ordersheet"><span class="glyphicon glyphicon-circle-arrow-right" aria-hidden="true"></span> 人気オーダーシートを見る</a></p>
           </div>
+          {else}
+          <div class="jumbotron" style="background: none;padding-top: 0;">
+            <div class="col-lg-6">
+            <div class="panel {$arrNewOrderSheet["d_order_sheet_CategoryColorClass"]}">
+              <div class="panel-heading">
+                  <h3 class="panel-title"><a data-toggle="modal" data-target="#detail" data-recipient="{$arrNewOrderSheet["d_order_sheet_OrderSheetID"]}" href="javascript: void(0)">{$arrNewOrderSheet["d_order_sheet_Title"]}</a></h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-3 order-left photo" style="padding: 0 !important;">
+                  {if $arrNewOrderSheet["d_order_sheet_ImageFileName1"] != ""}
+                  <img src="{$smarty.const.SHEET_IMG_URL}{$arrNewOrderSheet["d_order_sheet_ImageFileName1"]}">
+                  {else}
+                  <img src="{$smarty.const.SHEET_IMG_URL}noimage.png">
+                  {/if}
+                </div>
+                <div class="col-lg-9 text-overflow with-height-limit order-right" id="{$arrNewOrderSheet["d_order_sheet_OrderSheetID"]}">
+                  <p class="sheet-text">{$arrNewOrderSheet["d_order_sheet_Contents"]}</p>
+                </div>
+                <div class="order-under border-{$arrNewOrderSheet["d_order_sheet_CategoryColorClass"]}" id="sp">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $bIsLogin}<a href="{$smarty.const.URL}/customer/{$arrNewOrderSheet["d_order_sheet_CustomerID"]}">{$arrNewOrderSheet["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}　<span class="glyphicon glyphicon-time" aria-hidden="true"></span> {$arrNewOrderSheet["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}
+                    <div class="order-under border-{$arrNewOrderSheet["d_order_sheet_CategoryColorClass"]}" id="pc">
+                        <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{$arrNewOrderSheet["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}&nbsp;
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $bIsLogin}<a href="{$smarty.const.URL}/customer/{$arrNewOrderSheet["d_order_sheet_CustomerID"]}">{$arrNewOrderSheet["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}<br>
+                    </div>
+                </div>
+              </div>
+            </div>
+            </div>
+            <div class="col-lg-6">
+                <legend><h2>投稿完了しました</h2></legend>
+                <div class="alert alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    オーダーシート「<a data-toggle="modal" data-target="#detail" data-recipient="{$arrNewOrderSheet["d_order_sheet_OrderSheetID"]}" href="javascript: void(0)" class="alert-link">{$arrNewOrderSheet["d_order_sheet_Title"]}</a>」を公開しました。
+                </div>
+                {if !$bIsLogin}
+                <div class="alert alert-dismissible alert-warning">
+                    <button type="button" class="close" data-dismiss="alert">×</button>
+                    <strong>会員登録が完了していません</strong><br>会員登録をすると過去にあなたが投稿したオーダーシートがマイページから確認できるようになります。<a href="{$smarty.const.URL}/entry" class="alert-link">会員登録はこちら</a>
+                </div>
+                {/if}
+            </div>
+          </div>
+          {/if}
         </div>
       </div>
     </div>
   </div>
 
   <div class="row">
+    <div id="add" style="position: relative;top: -70px;"></div>
     <div class="col-lg-6">
       <h2><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> オーダーシート作成</h2>
         <div class="well bs-component">
-          <form class="form-horizontal">
+          <form class="form-horizontal" action="{$smarty.const.URL}/" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="csrf" value="{$stCsrf}">
+            <input type="hidden" name="mode" value="add">
             <fieldset>
+                {if !$bIsLogin}
+                <p><a href="{$smarty.const.URL}/login">会員登録が済んでいる場合はログインしてください</a></p>
+                <p><a href="{$smarty.const.URL}/entry">新規会員登録はこちら</a></p>
+                {/if}
               <div class="form-group">
                 <label for="select" class="col-lg-3 control-label">カテゴリー</label>
                 <div class="col-lg-9">
-                  <select class="form-control" id="select">
-                    <option>スターバックス・コーヒー</option>
-                    <option>サブウェイ</option>
-                    <option>二郎系ラーメン</option>
-                    <option>家系ラーメン</option>
-                    <option>その他</option>
+                  {assign var="key" value="d_order_sheet_CategoryID"}
+                  <select class="form-control" id="select" name="{$key}">
+                    {html_options options=$arrCategory selected=$arrForm[$key]}
                   </select>
                 </div>
               </div>
               <div class="form-group">
-                <label for="textArea" class="col-lg-3 control-label">タイトル</label>
+                  <label for="textArea" class="col-lg-3 control-label" id="no-pc">タイトル<br><span class="text-danger"><small>(最大50文字)</small></span></label>
+                  <label for="textArea" class="col-lg-3 control-label" id="yes-pc">タイトル&nbsp;&nbsp;<span class="text-danger"><small>(最大50文字)</small></span></label>
                 <div class="col-lg-9">
-                  <input name="title" class="form-control" placeholder="タイトルを入力してください">
+                  {assign var="key" value="d_order_sheet_Title"}
+                  <input name="{$key}" value="{$arrForm[$key]}" class="form-control" placeholder="タイトルを入力してください" maxlength="50">
                 </div>
               </div>
               <div class="form-group">
-                <label for="textArea" class="col-lg-3 control-label">オーダー内容</label>
+                <label for="textArea" class="col-lg-3 control-label" id="no-pc">オーダー内容<br><span class="text-danger"><small>(最大200文字)</small></span></label>
+                <label for="textArea" class="col-lg-3 control-label" id="yes-pc">オーダー内容&nbsp;&nbsp;<span class="text-danger"><small>(最大200文字)</small></span></label>
                 <div class="col-lg-9">
-                  <textarea class="form-control" rows="5" id="textArea" placeholder="オーダー内容を入力してください"></textarea>
+                  {assign var="key" value="d_order_sheet_Contents"}
+                  <textarea name="{$key}" id="{$key}" class="form-control" rows="5" id="textArea" placeholder="オーダー内容を入力してください" maxlength="200">{$arrForm[$key]}</textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label for="InputFile" class="col-lg-3 control-label"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 画像</label>
+                <label for="InputFile" class="col-lg-3 control-label" id="no-pc"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 画像<br><span class="text-danger"><small>(最大2MB jpg,png)</small></span></label>
+                <label for="InputFile" class="col-lg-3 control-label" id="yes-pc"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 画像&nbsp;&nbsp;<span class="text-danger"><small>(最大2MB jpg,png)</small></span></label>
                 <div class="col-lg-9">
-                  <input type="file" id="InputFile">
+                  {assign var="key" value="d_order_sheet_ImageFileName1"}
+                  <input type="file" name="{$key}" id="InputFile" accept=".jpg,.png,image/jpeg,image/png">
                 </div>
               </div>
               <div class="form-group">
                 <div class="" style="text-align: center;">
-                  <button type="submit" class="btn btn-primary btn-lg" style="width: 280px;">作成</button>
+                  <button type="submit" class="btn btn-primary btn-lg" style="width: 280px;" id="add-button">オーダーシートを登録</button>
                 </div>
               </div>
             </fieldset>
@@ -61,96 +115,128 @@
     <div class="col-lg-6">
       <h2 id="nav-tabs"><span class="glyphicon glyphicon-th-list" aria-hidden="true"></span> みんなのオーダーシート</h2>
       <div class="bs-component">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#popular" data-toggle="tab" aria-expanded="true">話題のオーダー</a></li>
+        <ul class="nav nav-tabs" id="order-tab">
+          <li class="active"><a href="#popular" data-toggle="tab" aria-expanded="true">人気オーダー</a></li>
           <li class=""><a href="#new" data-toggle="tab" aria-expanded="false">新着オーダー</a></li>
-          <li class="dropdown">
+          <li class="dropdown" id="sp">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
               カテゴリ別オーダーの一覧 <span class="caret"></span>
             </a>
             <ul class="dropdown-menu">
-              <li><a href="#category1" data-toggle="tab">スターバックス・コーヒー</a></li>
-              <li><a href="#category2" data-toggle="tab">サブウェイ</a></li>
-              <li><a href="#category3" data-toggle="tab">二郎系ラーメン</a></li>
-              <li><a href="#category4" data-toggle="tab">家系ラーメン</a></li>
-              <li><a href="#category5" data-toggle="tab">その他</a></li>
+              {foreach from=$arrCategory item=v key=k}
+              <li><a href="#category{$k}" data-toggle="tab">{$v}</a></li>
+              {/foreach}
             </ul>
           </li>
         </ul>
         <div id="myTabContent" class="tab-content">
+          {*人気オーダー*}
           <div class="tab-pane fade active in" id="popular">
-            <div class="panel panel-success">
+            {if $arrNewOrder}
+            {foreach from=$arrNewOrder item=arrData}
+            <div class="panel {$arrData["d_order_sheet_CategoryColorClass"]}">
               <div class="panel-heading">
-                <h3 class="panel-title">みんな大好き！チョコ×抹茶フラペチーノ</h3>
+                  <h3 class="panel-title"><a data-toggle="modal" data-target="#detail" data-recipient="{$arrData["d_order_sheet_OrderSheetID"]}" href="javascript: void(0)">{$arrData["d_order_sheet_Title"]}</a></h3>
               </div>
               <div class="panel-body">
-                <div class="col-lg-3" style="padding: 0 !important;">
-                  <img src="{$smarty.const.IMG_URL}sample1.jpg" width="125">
+                <div class="col-lg-3 order-left photo" style="padding: 0 !important;">
+                  {if $arrData["d_order_sheet_ImageFileName1"] != ""}
+                  <img src="{$smarty.const.SHEET_IMG_URL}{$arrData["d_order_sheet_ImageFileName1"]}">
+                  {else}
+                  <img src="{$smarty.const.SHEET_IMG_URL}noimage.png">
+                  {/if}
                 </div>
-                <div class="col-lg-9" style="margin-bottom: 20px !important;">
-                  １．抹茶クリームフラペチーノを注文<br>
-                  ２．チョコレートチップを追加［+50円］<br>
-                  ３．チョコレートソースを追加［無料］<br>
-                  （お好みで、抹茶パウダーを多めにすると抹茶味がアップ！）<br><br>
-                  夏にしか飲むことができないと思っていたあなたに朗報です！フラペチーノの定番カスタマイズ。抹茶とチョコという王道の組み合わせは多くの人の心を掴んで離しません。
+                <div class="col-lg-9 text-overflow with-height-limit order-right" id="{$arrData["d_order_sheet_OrderSheetID"]}">
+                  <p class="sheet-text">{$arrData["d_order_sheet_Contents"]}</p>
                 </div>
-                <div class="well well-sm" style="margin-bottom: 0 !important; clear: both; border: none !important; border-top: 1px solid #cbe7c7 !important; background-color: white !important; padding-top: 20px !important;">
-                  投稿日時：2017年 10月30日　閲覧数：1000　　　　　いいね！(20)
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="sp">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}　<span class="glyphicon glyphicon-time" aria-hidden="true"></span> {$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}</a>
                 </div>
-              </div>
-            </div>            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h3 class="panel-title">みんな大好き！チョコ×抹茶フラペチーノ</h3>
-              </div>
-              <div class="panel-body">
-                <div class="col-lg-3" style="padding: 0 !important;">
-                  <img src="{$smarty.const.IMG_URL}sample1.jpg" width="125">
-                </div>
-                <div class="col-lg-9" style="margin-bottom: 20px !important;">
-                  １．抹茶クリームフラペチーノを注文<br>
-                  ２．チョコレートチップを追加［+50円］<br>
-                  ３．チョコレートソースを追加［無料］<br>
-                  （お好みで、抹茶パウダーを多めにすると抹茶味がアップ！）<br><br>
-                  夏にしか飲むことができないと思っていたあなたに朗報です！フラペチーノの定番カスタマイズ。抹茶とチョコという王道の組み合わせは多くの人の心を掴んで離しません。
-                </div>
-                <div class="well well-sm" style="margin-bottom: 0 !important; clear: both; border: none !important; border-top: 1px solid #cbe7c7 !important; background-color: white !important; padding-top: 20px !important;">
-                  投稿日時：2017年 10月30日　閲覧数：1000　　　　　いいね！(20)
-                </div>
-              </div>
-            </div>            <div class="panel panel-success">
-              <div class="panel-heading">
-                <h3 class="panel-title">みんな大好き！チョコ×抹茶フラペチーノ</h3>
-              </div>
-              <div class="panel-body">
-                <div class="col-lg-3" style="padding: 0 !important;">
-                  <img src="{$smarty.const.IMG_URL}sample1.jpg" width="125">
-                </div>
-                <div class="col-lg-9" style="margin-bottom: 20px !important;">
-                  １．抹茶クリームフラペチーノを注文<br>
-                  ２．チョコレートチップを追加［+50円］<br>
-                  ３．チョコレートソースを追加［無料］<br>
-                  （お好みで、抹茶パウダーを多めにすると抹茶味がアップ！）<br><br>
-                  夏にしか飲むことができないと思っていたあなたに朗報です！フラペチーノの定番カスタマイズ。抹茶とチョコという王道の組み合わせは多くの人の心を掴んで離しません。
-                </div>
-                <div class="well well-sm" style="margin-bottom: 0 !important; clear: both; border: none !important; border-top: 1px solid #cbe7c7 !important; background-color: white !important; padding-top: 20px !important;">
-                  投稿日時：2017年 10月30日　閲覧数：1000　　　　　いいね！(20)
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="pc">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}&nbsp;
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}<br>
                 </div>
               </div>
             </div>
+            {/foreach}
+            {else}
+                まだ投稿がありません
+            {/if}
           </div>
 
+                
+          {*新着オーダー*}
           <div class="tab-pane fade" id="new">
-            <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit.</p>
+            {if $arrNewOrder}
+            {foreach from=$arrNewOrder item=arrData}
+            <div class="panel {$arrData["d_order_sheet_CategoryColorClass"]}">
+              <div class="panel-heading">
+                  <h3 class="panel-title"><a data-toggle="modal" data-target="#detail" data-recipient="{$arrData["d_order_sheet_OrderSheetID"]}" href="javascript: void(0)">{$arrData["d_order_sheet_Title"]}</a></h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-3 order-left photo" style="padding: 0 !important;">
+                  {if $arrData["d_order_sheet_ImageFileName1"] != ""}
+                  <img src="{$smarty.const.SHEET_IMG_URL}{$arrData["d_order_sheet_ImageFileName1"]}">
+                  {else}
+                  <img src="{$smarty.const.SHEET_IMG_URL}noimage.png">
+                  {/if}
+                </div>
+                <div class="col-lg-9 text-overflow with-height-limit order-right" id="{$arrData["d_order_sheet_OrderSheetID"]}">
+                  <p class="sheet-text">{$arrData["d_order_sheet_Contents"]}</p>
+                </div>
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="sp">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}　<span class="glyphicon glyphicon-time" aria-hidden="true"></span> {$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}</a>
+                </div>
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="pc">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}&nbsp;
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}<br>
+                </div>
+              </div>
+            </div>
+            {/foreach}
+            {else}
+                まだ投稿がありません
+            {/if}
           </div>
-          <div class="tab-pane fade" id="category1">
-            <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork.</p>
+            
+                
+          {*カテゴリ別オーダー一覧*}
+          {foreach from=$arrCategoryOrder item=arrData1 key=k}
+          <div class="tab-pane fade" id="{$k}">
+            {if $arrData1}
+            {foreach from=$arrData1 item=arrData}
+            <div class="panel {$arrData["d_order_sheet_CategoryColorClass"]}">
+              <div class="panel-heading">
+                  <h3 class="panel-title"><a data-toggle="modal" data-target="#detail" data-recipient="{$arrData["d_order_sheet_OrderSheetID"]}" href="javascript: void(0)">{$arrData["d_order_sheet_Title"]}</a></h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-lg-3 order-left photo" style="padding: 0 !important;">
+                  {if $arrData["d_order_sheet_ImageFileName1"] != ""}
+                  <img src="{$smarty.const.SHEET_IMG_URL}{$arrData["d_order_sheet_ImageFileName1"]}">
+                  {else}
+                  <img src="{$smarty.const.SHEET_IMG_URL}noimage.png">
+                  {/if}
+                </div>
+                <div class="col-lg-9 text-overflow with-height-limit order-right" id="{$arrData["d_order_sheet_OrderSheetID"]}">
+                  <p class="sheet-text">{$arrData["d_order_sheet_Contents"]}</p>
+                </div>
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="sp">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}　<span class="glyphicon glyphicon-time" aria-hidden="true"></span> {$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}</a>
+                </div>
+                <div class="order-under border-{$arrData["d_order_sheet_CategoryColorClass"]}" id="pc">
+                    <span class="glyphicon glyphicon-time" aria-hidden="true"></span>{$arrData["d_order_sheet_CreatedTime"]|date_format:"%Y&#24180;%m&#26376;%d&#26085; %H:%M"}&nbsp;
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {if $arrData["d_order_sheet_CustomerName"] != ""}<a href="{$smarty.const.URL}/customer/{$arrData["d_order_sheet_CustomerID"]}">{$arrData["d_order_sheet_CustomerName"]}</a>{else}未登録ユーザー{/if}<br>
+                </div>
+              </div>
+            </div>
+            {/foreach}
+            {else}
+                このカテゴリはまだ投稿がありません
+            {/if}
           </div>
-          <div class="tab-pane fade" id="category2">
-            <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater.</p>
-          </div>
+          {/foreach}
         </div>
       </div>
     </div>
   </div>
-
 </div>

@@ -14,6 +14,8 @@ class Error_IndexController extends Zend_Controller_Action {
             $objHttp = new Http();
             $objHttp->allowClientCacheCurrent();
             
+            $this->mdlCategory = new Application_Model_Category();
+            
             // 共通テンプレ生成の為のクラスを生成
             $layout = new Zend_Layout();
             // 共通レイアウトの読み込み
@@ -35,7 +37,13 @@ class Error_IndexController extends Zend_Controller_Action {
             // ログイン情報取得(名前)
             if ($this->objFrontSess->Login) {
                 $this->view->assign("bIsLogin", true);
+                $this->view->assign("stCustomerName", $this->objFrontSess->Name);
             }
+            
+            // カテゴリ
+            $this->arrCategory = CommonTools::changeDbArrayForFormTag($this->mdlCategory->fetchAll(array(
+                "d_category_CategoryID", "d_category_CategoryName")));
+            $this->view->assign("arrCategory", $this->arrCategory);
             
         } catch (Zend_Exception $e) {
             throw new Zend_Exception($e->getMessage());

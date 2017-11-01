@@ -1,44 +1,74 @@
-<div id="two_maincolumn">
-    ﻿<div id="undercolumn">
-        <div id="undercolumn_entry">
-            <h2 class="title">
-                <img src="{$smarty.const.FRONT_IMG_SSL}entry/agree_title.jpg" width="580" height="40" alt="ご利用規約" />
-            </h2>
-            <p><em>【重要】 プロユーザー登録をされる前に、下記ご利用規約をよくお読みください。</em><br />
-                マナトレーディングでは、お仕事でご利用のお客様にプロユーザー向けサービスをご用意しております。<br />
-                プロユーザー登録をいただきますと、メールアドレスとパスワードでログインすることで web からのカットサンプルのご請求も可能となります。<br />
-                サービス内容につきましては順次拡大していく予定ですので、下記ご利用規約をよくお読みのうえ ご登録をいただけますようお願いいたします。</p>
-            <textarea name="textfield" class="area470"  cols="80" rows="30" readonly="readonly">{$stMemberShip}</textarea>
-            <form name="agree_form" id="agree_form" method="post" action="{$smarty.const.SSL_URL}/entry">
-                <input type="hidden" name="mode" value="">
-                {if !$bIsLogin}
-                    <div class="tblareabtn">
-                        <a href="{$smarty.const.SSL_URL}" onmouseover="chgImg('{$smarty.const.FRONT_IMG_SSL}entry/b_noagree_on.gif', 'b_noagree');" onmouseout="chgImg('{$smarty.const.FRONT_IMG_SSL}entry/b_noagree.gif', 'b_noagree');">
-                            <img src="{$smarty.const.FRONT_IMG_SSL}entry/b_noagree.gif" width="180" height="30" alt="同意しない" border="0" name="b_noagree" />
-                        </a>&nbsp;
-                        <a href="javascript:void(0)" onmouseover="chgImg('{$smarty.const.FRONT_IMG_SSL}entry/b_agree_on.gif', 'b_agree');" onmouseout="chgImg('{$smarty.const.FRONT_IMG_SSL}entry/b_agree.gif', 'b_agree');">
-                            <img src="{$smarty.const.FRONT_IMG_SSL}entry/b_agree.gif" width="180" height="30" alt="規約に同意して会員登録" border="0" name="b_agree" id="agree"/>
-                        </a>
-                    </div>
+<div class="container">
+  <div class="page-header page-top">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="bs-component">
+          <div class="jumbotron white main3">
+            <div class="page-header col-lg-6">
+              <h1 id="type">Entry</h1>
+            </div>
+            <form class="form-horizontal" name="entry_form" id="entry_form" method="post" action="{$smarty.const.URL}/entry">
+              <input type="hidden" name="mode" value="">
+              <input type="hidden" name="csrf" value="{$stCsrf}">
+              <fieldset>
+                {if $arrErrorMessage}
+                <div class="alert alert-dismissible alert-danger">
+                    {foreach from=$arrErrorMessage item=v}{$v}<br>{/foreach}
+                </div>
                 {/if}
+                <div class="form-group">
+                  <label for="inputName" class="col-lg-4 control-label">ニックネーム<br><span class="text-danger"><small>(最大10文字)</small></span></label>
+                  <div class="col-lg-8">
+                    {assign var="key" value="d_customer_Name"}
+                    <input name="{$key}" value="{$arrForm[$key]}" type="text" class="form-control" id="inputName" placeholder="ニックネーム" maxlength="10">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputEmail" class="col-lg-4 control-label">メールアドレス<br><span class="text-danger"><small>(最大100文字)</small></span></label>
+                  <div class="col-lg-8">
+                    {assign var="key" value="d_customer_EmailAddress"}
+                    <input name="{$key}" value="{$arrForm[$key]}" type="text" class="form-control" id="inputEmail" placeholder="メールアドレス" maxlength="100">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="inputPassword" class="col-lg-4 control-label">パスワード<br><span class="text-danger"><small>(4～12文字・半角英数字)</small></span></label>
+                  <div class="col-lg-8">
+                    {assign var="key" value="d_customer_Password"}
+                    <input name="{$key}" value="" type="password" class="form-control" id="inputPassword" placeholder="パスワード" maxlength="12">
+                  </div>
+                </div><br>
+                <div class="form-group">
+                  <div class="" style="text-align: center;">
+                    <button id="entryBtn" type="button" class="btn btn-primary btn-lg pc_mb20" style="width: 240px;">確認画面へ</button>
+                  </div>
+                </div>
+              </fieldset>
             </form>
+          </div>
         </div>
-    </div>        
+      </div>
+    </div>
+  </div>
 </div>
 <script>
-$(function() {
-
-    // 同意ボタン
-    $('#agree').click(function() {
-        setMode('agree');
+    $(function () { 
+        // ログインボタン
+        $('#entryBtn').click(function () {
+            setMode('entry');
+        });
     });
 
-});
+    function setMode(mode) {
+        var em = document.entry_form;
+        em.mode.value = mode;
+        em.action = "{$smarty.const.URL}/entry";
 
-function setMode(mode) {
-    var em = document.agree_form;
-    em.mode.value = mode;
-    em.submit();
-}
-    
+        // 必須項目チェック
+        if (em.d_customer_EmailAddress.value == "" || em.d_customer_Password.value == "" || em.d_customer_Name.value == "") {
+            alert("ニックネーム、メールアドレス、パスワードを全て入力して下さい。");
+            return false;
+        }
+
+        em.submit();
+    }
 </script>

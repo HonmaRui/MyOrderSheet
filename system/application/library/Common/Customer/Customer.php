@@ -146,25 +146,9 @@ class Customer {
                 }
             }
             
-            // 新規登録時のみ顧客ランク決定
-            if ($iCustomerID == "") {
-                $arrCustomer["d_customer_CustomerRankID"] = $this->decideCustomerRank($arrCustomer["d_customer_CompanyName"]);
-            }
-            
             // パスワードを暗号化する
             if (!empty($arrCustomer["d_customer_Password"])) {
-                if ($iCustomerID != "") {
-                    // 編集
-//                    $arrTemp = $this->mdlCustomer->find(array("d_customer_CustomerID" => $iCustomerID), array("d_customer_Password"));
-//                    $iNowPass = $this->objCommon->makePassword($arrCustomer["d_customer_Password"]);
-//                    if ($arrTemp["d_customer_Password"] != $iNowPass) {
-//                        $arrCustomer["d_customer_Password"] = $iNowPass;
-//                    }
-                    $arrCustomer["d_customer_Password"] = $this->objCommon->makePassword($arrCustomer["d_customer_Password"]);
-                } else {
-                    // 新規
-                    $arrCustomer["d_customer_Password"] = $this->objCommon->makePassword($arrCustomer["d_customer_Password"]);
-                }
+                $arrCustomer["d_customer_Password"] = $this->objCommon->makePassword($arrCustomer["d_customer_Password"]);
             }
             
             // DBに保存処理開始

@@ -1,6 +1,6 @@
 <?php
 
-class Mypage_IndexController extends Zend_Controller_Action {
+class Customer_IndexController extends Zend_Controller_Action {
 
     /***
      * 
@@ -59,10 +59,6 @@ class Mypage_IndexController extends Zend_Controller_Action {
                 $this->view->assign("stCustomerName", $this->objFrontSess->Name);
             }
             
-            if ($this->objFrontSess->memberID == "") {
-                return $this->_redirect(URL);
-            }
-            
             // カテゴリ
             $this->arrCategory = CommonTools::changeDbArrayForFormTag($this->mdlCategory->fetchAll(array(
                 "d_category_CategoryID", "d_category_CategoryName")));
@@ -75,7 +71,7 @@ class Mypage_IndexController extends Zend_Controller_Action {
     
     /***
      * 
-     * マイページ表示アクション
+     * ユーザーページ表示アクション
      * 
      */
     public function indexAction() {
@@ -84,84 +80,13 @@ class Mypage_IndexController extends Zend_Controller_Action {
             
             $stPostCsrf = $this->_getParam("csrf", null);
             $stMode = $this->_getParam("mode", null);
+            $iCustomerID = $this->_getParam("customerID");
             $stSalt = "fYglTXMP";
             
             if (!$this->objFormReq->isPost()) {
                 // Get request
-                if ($_SESSION["changeData"] === true) {
-                    $this->view->assign("bCompleted", true);
-                    $_SESSION["changeData"] = false;
-                }
             } else {
                 // Post request
-                $arrForm = $this->objFormReq->getPost();
-
-                switch ($stMode) {
-                    case "back":
-                        CommonTools::checkTokenData($stSalt, $stPostCsrf);
-                        $stMode = "entry";
-                        break;
-                    case "entry":
-                        CommonTools::checkTokenData($stSalt, $stPostCsrf);
-                        
-                        $arrErrorMessage = array();
-                        $arrErrorMessage = $this->objMypage->errorCheck($arrForm);
-                        
-                        // メールアドレス重複チェック
-                        if ($arrForm["d_customer_EmailAddress"] != "" && $arrErrorMessage["d_customer_EmailAddress"] == "") {
-                            $arrTemp = $this->mdlCustomer->findAll(array(
-                                "d_customer_EmailAddress" => $arrForm["d_customer_EmailAddress"],
-                                "d_customer_SignedOut" => 0,
-                                "d_customer_DelFlg" => 0,
-                            ), array("d_customer_CustomerID"));
-                            if (count($arrTemp) > 1) {
-                                $arrErrorMessage["d_customer_EmailAddress"] = "このメールアドレスは使用できません。別のメールアドレスでご登録ください。";
-                            }
-                        }
-                        
-                        // エラーがなければ確認画面へ
-                        if (empty($arrErrorMessage)) {
-                            $this->objFrontSess->pass = $arrForm["d_customer_Password"];
-                            $stMode = "confirm";
-                        }
-
-                        break;
-                    case "confirm":
-                        CommonTools::checkTokenData($stSalt, $stPostCsrf);
-                        
-                        // 会員データ作成
-                        $arrForm["d_customer_Password"] = $this->objFrontSess->pass;
-                        $this->objCustomer->createCustomer($this->objFormat->Escape($arrForm), $this->objFrontSess->memberID);
-                        
-                        // 完了画面へ
-                        $_SESSION["changeData"] = true;
-                        return $this->_redirect(URL . "/mypage");
-
-                        break;
-                    case "refusal":
-                        CommonTools::checkTokenData($stSalt, $stPostCsrf);
-                        
-                        // 退会処理
-                        $arrUpdate = array();
-                        $arrUpdate["d_customer_CustomerID"] = $this->objFrontSess->memberID;
-                        $arrUpdate["d_customer_SignedOut"] = "1";
-                        $this->mdlCustomer->begin();
-                        $this->mdlCustomer->save($arrUpdate);
-                        $this->mdlCustomer->commit();
-                        
-                        // セッション情報をクリアする
-                        if(isset($this->objFrontSess)){
-                            unset($this->objFrontSess);
-                            session_destroy();
-                        }
-                         
-                        // 完了
-                        return $this->_redirect(URL);
-
-                        break;
-                    default:
-                        break;
-                }
             }
             
             $stCsrf = CommonTools::generateTokenData($stSalt);
@@ -184,7 +109,7 @@ class Mypage_IndexController extends Zend_Controller_Action {
             // データ取得
             $this->mdlOrderSheet->setPageLimit($iPageLimit);
             $this->mdlOrderSheet->setPageNumber($iPageNumber);
-            $this->mdlOrderSheet->setSearchConditionForMypage(array("d_order_sheet_CustomerID" => $this->objFrontSess->memberID), array("*"));
+            $this->mdlOrderSheet->setSearchConditionForMypage(array("d_order_sheet_CustomerID" => $iCustomerID), array("*"));
             // 受注テーブルの検索実行
             $arrOrderSheet = $this->mdlOrderSheet->search();
             
@@ -201,7 +126,7 @@ class Mypage_IndexController extends Zend_Controller_Action {
             }
             
             // 会員情報取得
-            $arrCustomer = $this->objCustomer->getCustomerInfoForFront($this->objFrontSess->memberID);
+            $arrCustomer = $this->objCustomer->getCustomerInfoForFront($iCustomerID);
             $this->view->assign("arrCustomer", $arrCustomer);
             
         } catch (Zend_Exception $e) {

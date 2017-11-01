@@ -6,9 +6,13 @@
 /system/nbproject/project.properties
 /system/nbproject/
 /system/nbproject/project.xml
-/system/log
+/system/log/
+/system/ZendFramework-1.12.20
 /templates_c
 /admin/templates_c
 .DS_Store
 Thumbs.db
 /system/data/smarty/templates_c/
+.htaccess
+.htpasswd
+php.ini

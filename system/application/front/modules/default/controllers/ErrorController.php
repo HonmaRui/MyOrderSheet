@@ -81,10 +81,17 @@ class ErrorController extends Zend_Controller_Action {
         // ログイン情報取得(名前)
         if ($this->objFrontSess->Login) {
             $this->view->assign("bIsLogin", true);
+            $this->view->assign("stCustomerName", $this->objFrontSess->Name);
         }
         
         // セッション情報の保存
         $this->objCommon = new Common();
+        $this->mdlCategory = new Application_Model_Category();
+            
+        // カテゴリ
+        $this->arrCategory = CommonTools::changeDbArrayForFormTag($this->mdlCategory->fetchAll(array(
+            "d_category_CategoryID", "d_category_CategoryName")));
+        $this->view->assign("arrCategory", $this->arrCategory);
         
     }
 }

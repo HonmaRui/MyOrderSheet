@@ -21,100 +21,21 @@
         <meta name="twitter:description" content="{$smarty.const.SITE_DESCRIPTION}">
         
         <link rel="shortcut icon" href="{$smarty.const.IMG_URL}favicon.png">
-        <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-        <script src="js/jquery-2.1.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <style type="text/css">
-            @import url(https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css);
-            @import url(https://fonts.googleapis.com/earlyaccess/mplus1p.css);
-            body { padding-top: 80px; }
-            @media ( min-width: 768px ) {
-                #banner {
-                    min-height: 300px;
-                    border-bottom: none;
-                }
-                .bs-docs-section {
-                    margin-top: 8em;
-                }
-                .bs-component {
-                    position: relative;
-                }
-                .bs-component .modal {
-                    position: relative;
-                    top: auto;
-                    right: auto;
-                    left: auto;
-                    bottom: auto;
-                    z-index: 1;
-                    display: block;
-                }
-                .bs-component .modal-dialog {
-                    width: 90%;
-                }
-                .bs-component .popover {
-                    position: relative;
-                    display: inline-block;
-                    width: 220px;
-                    margin: 20px;
-                }
-                .nav-tabs {
-                    margin-bottom: 15px;
-                }
-                .progress {
-                    margin-bottom: 10px;
-                }
-                #pc { display: none; }
-            }
-            @media ( max-width: 768px ) {
-                #search-form { display: inline; width: 80%;}
-                #search-btn { margin-bottom: 3px; }
-                .sp_pr0 { padding-right: 0px; }
-            }
-            .jumbotron { background:url(img/main.png) center no-repeat; background-size: cover;　color: white;}
-            .white { color: white; }
-            .font0 { font-size: 0.7em; }
-            .font1 { font-family: 'Rounded Mplus 1c'; }
-            .font2 { font-family: 'Mplus 1p'; font-weight: 400 !important;}
-            .fs1em { font-size: 1em !important; }
-            footer {
-              padding: 40px 0;
-              color: #eee;
-              background-color: #333;
-            }
-            footer .copyright {
-              padding-top: 10px;
-              padding-bottom: 10px;
-            }
-            .social-button {
-                position: relative;
-                padding: 10px 0;
-                margin: 0 auto !important;
-                overflow: hidden;
-            }
-            .social-button > ul {
-                position: relative;
-                left: 50%;
-                float: left;
-                padding: 0;
-                margin: 0;
-                list-style: outside none none;
-            }
-            .social-button > ul > li {
-                position: relative;
-                left: -50%;
-                float: left;
-                padding: 0;
-                margin: 0 10px;
-            }
-        </style>
+        <link rel="stylesheet" type="text/css" href="{$smarty.const.CSS_URL}bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="{$smarty.const.CSS_URL}overwrite.css">
+        <script src="{$smarty.const.JS_URL}jquery-2.1.1.min.js"></script>
+        <script src="{$smarty.const.JS_URL}bootstrap.min.js"></script>
+        <script src="{$smarty.const.JS_URL}common.js"></script>
     </head>
     <body>
         <header>
             <div class="navbar navbar-default navbar-fixed-top">
                 <div class="container">
                     <div class="navbar-header">
-                        <a href="/" class="navbar-brand sp_pr0">
+                        <a href="{$smarty.const.URL}" class="navbar-brand sp_pr0" id="sp">
                             <img src="{$smarty.const.IMG_URL}logo.png" style="top: -8px;position: relative;" width="234" height="40"></a>
+                        <a href="{$smarty.const.URL}" class="navbar-brand sp_pr0" id="pc">
+                            <img src="{$smarty.const.IMG_URL}logo.png" style="top: -8px;position: relative;" width="205" height="35"></a>
                         <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
@@ -123,13 +44,19 @@
                     </div>
                     <div class="navbar-collapse collapse" id="navbar-main">
                         <ul class="nav navbar-nav">
-                            <li><a href="/">新規登録</a></li>
-                            <li><a href="/">ログイン</a></li>
-                            <li><a href="/">オーダーシート作成</a></li>
+                            {if $bIsLogin}
+                            <li> <a href="{$smarty.const.URL}/mypage"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {$stCustomerName}</a></li>
+                            <li><a href="javascript: void(0)" data-toggle="modal" data-target="#new"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> 新規作成</a></li>
+                            <li><a href="{$smarty.const.URL}/logout"><span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span> ログアウト</a></li>
+                            {else}
+                            <li><a href="{$smarty.const.URL}/entry"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> 新規登録</a></li>
+                            <li><a href="{$smarty.const.URL}/login"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> ログイン</a></li>
+                            <li><a href="javascript: void(0)" data-toggle="modal" data-target="#new"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> オーダーシート作成</a></li>
+                            {/if}
                         </ul>
-                        <form class="navbar-form navbar-left" role="search">
+                        <form class="navbar-form navbar-left" role="search" action="{$smarty.const.URL}/ordersheet" method="get" enctype="multipart/form-data" name="search_form">
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="オーダーシート名で検索" id="search-form">
+                                <input type="text" class="form-control" placeholder="オーダーシート名で検索" id="search-form" name="keyword" value="{$arrForm["keyword"]}">
                                 <button type="submit" class="btn btn-default" id="search-btn"><img src="{$smarty.const.IMG_URL}search.png" width="21" height="21"></button>
                             </div>
                         </form>
@@ -145,3 +72,64 @@
                 </div>
             </div>
         </header>
+                            
+<!-- モーダル・ダイアログ -->
+<div class="modal fade" id="new" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal" action="{$smarty.const.URL}/" method="post" enctype="multipart/form-data">
+                  <input type="hidden" name="csrf" value="{$stCsrf}">
+                  <input type="hidden" name="mode" value="add">
+                  <fieldset>
+                      {if !$bIsLogin}
+                      <p><a href="{$smarty.const.URL}/login">会員登録が済んでいる場合はログインしてください</a></p>
+                      <p><a href="{$smarty.const.URL}/entry">新規会員登録はこちら</a></p>
+                      {/if}
+                    <div class="form-group">
+                      <label for="select" class="col-lg-3 control-label">カテゴリー</label>
+                      <div class="col-lg-9">
+                        {assign var="key" value="d_order_sheet_CategoryID"}
+                        <select class="form-control" id="select" name="{$key}">
+                          {html_options options=$arrCategory selected=$arrForm[$key]}
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="textArea" class="col-lg-3 control-label" id="no-pc">タイトル<br><span class="text-danger"><small>(最大50文字)</small></span></label>
+                        <label for="textArea" class="col-lg-3 control-label" id="yes-pc">タイトル&nbsp;&nbsp;<span class="text-danger"><small>(最大50文字)</small></span></label>
+                      <div class="col-lg-9">
+                        {assign var="key" value="d_order_sheet_Title"}
+                        <input name="{$key}" value="{$arrForm[$key]}" class="form-control" placeholder="タイトルを入力してください" maxlength="50">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="textArea" class="col-lg-3 control-label" id="no-pc">オーダー内容<br><span class="text-danger"><small>(最大200文字)</small></span></label>
+                      <label for="textArea" class="col-lg-3 control-label" id="yes-pc">オーダー内容&nbsp;&nbsp;<span class="text-danger"><small>(最大200文字)</small></span></label>
+                      <div class="col-lg-9">
+                        {assign var="key" value="d_order_sheet_Contents"}
+                        <textarea name="{$key}" id="{$key}" class="form-control" rows="5" id="textArea" placeholder="オーダー内容を入力してください" maxlength="200">{$arrForm[$key]}</textarea>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="InputFile" class="col-lg-3 control-label" id="no-pc"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 画像<br><span class="text-danger"><small>(最大2MB jpg,png)</small></span></label>
+                      <label for="InputFile" class="col-lg-3 control-label" id="yes-pc"><span class="glyphicon glyphicon-camera" aria-hidden="true"></span> 画像&nbsp;&nbsp;<span class="text-danger"><small>(最大2MB jpg,png)</small></span></label>
+                      <div class="col-lg-9">
+                        {assign var="key" value="d_order_sheet_ImageFileName1"}
+                        <input type="file" name="{$key}" id="InputFile" accept=".jpg,.png,image/jpeg,image/png">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <div class="" style="text-align: center;">
+                        <button type="submit" class="btn btn-primary btn-lg" style="width: 280px;" id="add-button">オーダーシートを登録</button>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">閉じる</button>
+            </div>
+        </div>
+    </div>
+</div>
